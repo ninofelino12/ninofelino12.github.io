@@ -25,7 +25,23 @@
               <input type="text" class="form-control" id="dataCopy" placeholder="Masukan teks" name="">
           </div>
           <button type="submit" class="btn btn-md btn-primary ml-3" onclick="copyTeks()">Copy</button>
-          <script></script>
+          <script>
+            function F1() {
+                     // Get the text field
+    var copyText = document.getElementById("myInput");
+  
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+  
+     // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.value);
+  
+    // Alert the copied text
+    alert("Copied the text: " + copyText.value);
+  }
+
+          </script>
           <input type="text" value="Hello World" id="myInput">
 
 <!-- The button used to copy the text -->
