@@ -9,4 +9,5 @@ flutter doctor
 export PATH="$PATH:[PATH_OF_FLUTTER_GIT_DIRECTORY]/bin"
 echo $PATH
 which flutter
+sudo apt-get install git
 sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev
