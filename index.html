@@ -84,8 +84,26 @@ html {
   }
 }
 </style>
+  <script>
+  function myFunction() {
+  // Get the text field
+  var copyText = document.getElementById("myvpn");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+
+  // Alert the copied text
+  alert("Copied the text: " + copyText.value);
+} 
+  
+  </script>  
 </head>
 <body>
+  
 
 <div class="header">
   <img src="https://avatars.githubusercontent.com/u/53456354?s=96&v=4" alt="Italian Trulli">
@@ -125,6 +143,10 @@ html {
     <div class="aside">
       <h2>VPS</h2>
       <p>ssh root@188.166.252.226</p>
+      <input type="text" value="ssh root@188.166.252.226" id="myInput">
+
+<!-- The button used to copy the text -->
+<button onclick="myFunction()">Copy text</button>
       <h2>Where?</h2>
       <p>Crete is a Greek island in the Mediterranean Sea.</p>
       <h2>How?</h2>
