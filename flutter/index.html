@@ -1,4 +1,7 @@
 sudo mv /etc/apt/preferences.d/nosnap.pref ~/Documents/nosnap.backup
 sudo apt install snapd
 snap install flutter --classic
+flutter pub get
+flutter run -d web-server --web-hostname=0.0.0.0 --web-port=8081
+
 
