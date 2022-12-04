@@ -1,0 +1,169 @@
+Konfigurasi file 
+<a href="https://www.cybrosys.com/blog/how-create-module-odoo">Link</a>
+
+* __init__.py
+* __manifest__.py
+* model.py
+* view.xml
+
+So our __init__.py file will be like this, 
+import model
+
+{
+    'name': 'Student Record',
+    'summary': """This module will add a record to store student details""",
+    'version': '10.0.1.0.0',
+    'description': """This module will add a record to store student details""",
+    'author': 'Niyas Raphy',
+    'company': 'Cybrosys Techno Solutions',
+    'website': 'https://www.cybrosys.com',
+    'category': 'Tools',
+    'depends': ['base'],
+    'license': 'AGPL-3',
+    'data': [
+        'view.xml',
+    ],
+    'demo': [],
+    'installable': True,
+    'auto_install': False,
+}
+
+model.py
+
+from odoo import models, fields
+class StudentRecord(models.Model):
+    _name = "student.student"
+    name = fields.Char(string='Name', required=True)
+    middle_name = fields.Char(string='Middle Name', required=True)
+    last_name = fields.Char(string='Last Name', required=True)
+    photo = fields.Binary(string='Photo')
+    student_age = fields.Integer(string='Age')
+    student_dob = fields.Date(string="Date of Birth")
+    student_gender = fields.Selection([('m', 'Male'), ('f', 'Female'), ('o', 'Other')], string='Gender')
+    student_blood_group = fields.Selection(
+        [('A+', 'A+ve'), ('B+', 'B+ve'), ('O+', 'O+ve'), ('AB+', 'AB+ve'),
+         ('A-', 'A-ve'), ('B-', 'B-ve'), ('O-', 'O-ve'), ('AB-', 'AB-ve')],
+        string='Blood Group')
+    nationality = fields.Many2one('res.country', string='Nationality')
+
+
+* name – name is defined as a char field.
+* middle_name – middle name is also char field
+* last_name – char field
+* student_photo – This a binary field where we can store the image of the student.
+* student_age – Integer field to store the age of student
+* student_dob – Date field to record the date of birth of the student
+* student_gender – It is selection field from which the gender of the student can be selected
+* student_blood_group- This is also a selection field, from this the blood group of can is selected
+*student_nationality – This is a many2one field of the res.country, all the * nations list will be displayed an
+
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_school" name="School"/>
+        <menuitem id="school_student" name="Students" parent="menu_school"  
+                  action="action_view_students"/>
+    </data>
+</odoo>
+
+Here, we have to give which all views should be there, in the above I have given two views ie, tree and form view. In the res_model we have to specify the model, our model name is student.student, the name that we have given while the creation of the class in the model.py.
+The domain is for, suppose if we have to filter the records by clicking the menu we can give the filter condition here.
+<field name="domain">[('student_age', '>', 23 )]</field>
+if we give such a domain then student those who have an age greater than 23 will be displayed.
+ <p class="oe_view_nocontent_create">Create new student
+  </p> 
+
+Tree view:-
+<record id="view_student_tree" model="ir.ui.view">
+            <field name="name">student.student.tree</field>
+            <field name="model">student.student</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="Student">
+                    <field name="name" />
+                    <field name="middle_name" />
+                    <field name="last_name" />
+                    <field name="student_gender" />
+                    <field name="student_age" />
+                    <field name="student_dob" />
+                    <field name="student_blood_group" />
+                    <field name="lang" />
+                </tree>
+            </field>
+</record>
+
+Form view:-
+<record id="view_student_form" model="ir.ui.view">
+            <field name="name">student.student.form</field>
+            <field name="model">student.student</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Student">
+                    <sheet>
+                        <field name="photo" widget="image" class="oe_left oe_avatar" />
+                        <div class="oe_title">
+                            <h1>
+                                <table>
+                                    <tr>
+                                        <td style="padding-right:10px;"><field name="name" required="1" placeholder="First Name" /></td>
+                                        <td style="padding-right:10px;"><field name="middle_name" placeholder="Middle Name" /></td>
+                                        <td style="padding-right:10px;"><field name="last_name" placeholder="Last Name" /></td>
+                                    </tr>
+                                </table>
+      </h1>
+                        </div>
+                        <notebook colspan="4">
+                            <page name="personal_information"
+                                string="Personal Information">
+                                <group col="4" colspan="4"
+                                    name="personal_detail">
+                                    <field name="student_gender" />
+                                    <field name="student_age" />
+                                    <field name="student_dob" />
+                                    <field name="student_gender" />
+                                    <field name="student_blood_group" />
+                                    <field name="nationality" />
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+<group>
+ 
+		
+<field name="student_age" />
+	
+</group>
+	
+<group>
+		
+<field name="student_blood_group" />
+	
+</group>
+<group>
+  
+  * __manifest__.py
+	
+{
+    'name': 'Student Record',
+    'summary': """This module will add a record to store student details""",
+    'version': '10.0.1.0.0',
+    'description': """This module will add a record to store student details""",
+    'author': 'Niyas Raphy',
+    'company': 'Cybrosys Techno Solutions',
+    'website': 'https://www.cybrosys.com',
+    'category': 'Tools',
+    'depends': ['base'],
+    'license': 'AGPL-3',
+    'data': [
+        'data/view.xml',
+    ],
+    'demo': [],
+    'installable': True,
+    'auto_install': False,
+}
+  
+  
