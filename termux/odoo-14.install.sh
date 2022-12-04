@@ -1,3 +1,4 @@
+sudo apt-get install conky-manager
 sudo apt-get install postgresql -y
 sudo su - postgres -c "createuser -s $USER" 2> /dev/null || true
 wget https://www.python.org/ftp/python/3.10.8/Python-3.10.8.tar.xz
