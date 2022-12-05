@@ -20,5 +20,6 @@ pip install psycopg2
 pip install PyPDF2
 sudo apt-get install git build-essential wget python3-dev python3-venv python3-wheel libxslt-dev libzip-dev libldap2-dev libsasl2-dev python3-setuptools node-less libjpeg-dev gdebi -y
 echo $PATH"odoo-bin" >> start.sh
+./odoo-bin
 
 
