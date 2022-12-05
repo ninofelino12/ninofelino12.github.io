@@ -1,3 +1,5 @@
+#!/bin/bash
+cd $home$user
 sudo apt-get install conky-manager
 sudo apt-get install postgresql -y
 sudo su - postgres -c "createuser -s $USER" 2> /dev/null || true
