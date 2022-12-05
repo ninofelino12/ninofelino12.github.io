@@ -1,4 +1,6 @@
 #!/bin/bash
+sudo apt-get update
+sudo apt-get upgrade
 cd $home$user
 sudo apt-get install git
 sudo apt-get install conky-manager
