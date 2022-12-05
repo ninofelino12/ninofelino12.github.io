@@ -10,9 +10,10 @@ export PATH="Python-3.10.8/bin":$PATH
 export PATH="odoo/bin":$PATH
 sudo apt-get install pip
 cd odoo
-pip install -r ./odoo/requirements.txt
+pip install -r ./requirements.txt
 sudo apt install python3-dev libpq-dev
 pip3 install psycopg2
+pip3 install PyPDF2
 sudo apt-get install git build-essential wget python3-dev python3-venv python3-wheel libxslt-dev libzip-dev libldap2-dev libsasl2-dev python3-setuptools node-less libjpeg-dev gdebi -y
 echo $PATH"odoo-bin" >> start.sh
 
