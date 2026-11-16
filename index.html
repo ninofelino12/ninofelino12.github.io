@@ -176,6 +176,13 @@
     .result-line { display: flex; align-items: center; justify-content: space-between; min-height: 22px; margin: 0 2px 12px; color: var(--muted); font-size: 10px; }
     .result-line strong { color: #dce1e9; font-weight: 650; }
     .repo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+    .private-demo-section { margin-top: 34px; }
+    .private-demo-grid { margin-top: 14px; }
+    .private-demo-card { min-height: 138px; }
+    .private-demo-card .repo-description { min-height: 0; margin: 11px 0 16px; }
+    .private-demo-card .repo-bottom { margin-top: auto; }
+    .private-demo-notice { margin: 6px 0 0; color: var(--muted-2); font-size: 10px; line-height: 1.6; }
+    .private-demo-card .repo-status { border-color: rgba(195,243,107,.2); color: var(--accent); }
     .repo-card {
       display: flex;
       min-height: 204px;
@@ -359,7 +366,14 @@
       <div class="repo-grid" id="repo-grid" aria-live="polite" aria-busy="true">
         <div class="state-panel" id="state-panel"><span class="state-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.64 5.64l2.12 2.12m8.48 8.48 2.12 2.12m0-12.72-2.12 2.12m-8.48 8.48-2.12 2.12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/></svg></span><h3 class="state-title" id="state-title">Memanggil repo dari awan digital</h3><p class="state-message" id="state-message">Bentar, repo lagi turun dari awan. Jangan ganggu, dia bawa kardus.</p><button class="state-action" id="retry" type="button" hidden>Gas lagi, bos</button></div>
       </div>
-      <p class="footnote"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 4 6v5c0 5.1 3.42 8.42 8 10 4.58-1.58 8-4.9 8-10V6l-8-3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Yang nongol cuma repo publik. Repo privat tetap di ruang rahasia—jangan digeledah pakai senter.</p>
+      <section class="private-demo-section" aria-labelledby="private-demos-title">
+        <div class="section-head">
+          <div><h2 class="section-title" id="private-demos-title">Demo dari repo privat</h2><p class="private-demo-notice">Source tetap dikunci di gudang. Di sini cuma nama proyek dan tombol buat nyoba websitenya—nggak ada jalan ke repo GitHub.</p></div>
+          <span class="repo-status" aria-label="16 demo website dari repositori privat">16 demo · source terkunci</span>
+        </div>
+        <div class="repo-grid private-demo-grid" id="private-demo-grid" aria-label="Website demo repositori privat"></div>
+      </section>
+      <p class="footnote"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 4 6v5c0 5.1 3.42 8.42 8 10 4.58-1.58 8-4.9 8-10V6l-8-3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Daftar repo live cuma mengambil data publik. Untuk repo privat, yang dibuka hanya demo website—source tetap di balik pintu gudang.</p>
     </section>
   </main>
 
@@ -385,10 +399,29 @@
       'use strict';
       const USERNAME = 'ninofelino12';
       const API_ROOT = `https://api.github.com/users/${USERNAME}/repos?type=owner&sort=updated&per_page=100`;
+      const PRIVATE_DEMOS = Object.freeze([
+        { name: 'midleware', website: 'https://midleware-three.vercel.app' },
+        { name: 'markdown-viewer', website: 'https://markdown-viewer-rho.vercel.app' },
+        { name: 'umkm-perikanan', website: 'https://umkm-perikanan.vercel.app' },
+        { name: 'teropong', website: 'https://teropong.vercel.app' },
+        { name: 'bullet', website: 'https://bullet-eight.vercel.app' },
+        { name: 'project-perikanan', website: 'https://project-perikanan.vercel.app' },
+        { name: 'qps-upload', website: 'https://qps-upload.vercel.app' },
+        { name: 'cctv_monitor', website: 'https://cctv-monitor-kappa.vercel.app' },
+        { name: 'barcode', website: 'https://barcode-eight-orcin.vercel.app' },
+        { name: 'web-app', website: 'https://web-app-eight-ebon.vercel.app' },
+        { name: 'geminineon', website: 'https://geminineon.vercel.app' },
+        { name: 'v0-house-sales-app', website: 'https://v0-house-sales-app.vercel.app' },
+        { name: 'vercel', website: 'https://vercel-lyart-rho-43.vercel.app' },
+        { name: 'fastapi', website: 'https://fastapi-zeta-tan.vercel.app' },
+        { name: 'nino-vercel', website: 'https://nino-vercel.vercel.app' },
+        { name: 'fastapi-python-boilerplate', website: 'https://fastapi-python-boilerplate-coral.vercel.app' }
+      ]);
       const CACHE_KEY = `repo-index:${USERNAME}:public:v1`;
       const CACHE_TTL = 10 * 60 * 1000;
       const PALETTE = ['#c3f36b', '#a78bfa', '#64d8cb', '#ffb86b', '#f28ba8', '#79a9ff', '#e7d574', '#8dd1a8'];
       const grid = document.getElementById('repo-grid');
+      const privateDemoGrid = document.getElementById('private-demo-grid');
       const panel = document.getElementById('state-panel');
       const titleEl = document.getElementById('state-title');
       const messageEl = document.getElementById('state-message');
@@ -416,6 +449,55 @@
           const url = new URL(value);
           return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '';
         } catch (_) { return ''; }
+      }
+
+      function renderPrivateDemos() {
+        const fragment = document.createDocumentFragment();
+        PRIVATE_DEMOS.forEach((demo, index) => {
+          const website = safeExternalUrl(demo.website);
+          if (!website) return;
+          const card = document.createElement('article');
+          card.className = 'repo-card private-demo-card';
+          card.style.animationDelay = `${Math.min(index * 28, 280)}ms`;
+
+          const cardTop = document.createElement('div');
+          cardTop.className = 'repo-card-top';
+          const nameWrap = document.createElement('div');
+          nameWrap.className = 'repo-name-wrap';
+          const icon = document.createElement('span');
+          icon.className = 'repo-icon';
+          icon.append(makeSvg('M6 3.75h8.2L18 7.6v12.65H6V3.75Z M14 3.75V8h4 M8.5 12h7 M8.5 15.5h7'));
+          const name = document.createElement('span');
+          name.className = 'repo-name';
+          name.title = demo.name;
+          name.textContent = demo.name;
+          nameWrap.append(icon, name);
+          const badge = document.createElement('span');
+          badge.className = 'repo-status';
+          badge.textContent = 'Private';
+          cardTop.append(nameWrap, badge);
+
+          const description = document.createElement('p');
+          description.className = 'repo-description';
+          description.textContent = 'Repo terkunci. Website demo bisa dicoba di sini.';
+
+          const bottom = document.createElement('div');
+          bottom.className = 'repo-bottom';
+          const label = document.createElement('span');
+          label.className = 'updated';
+          label.textContent = 'Website demo';
+          const link = document.createElement('a');
+          link.className = 'repo-link';
+          link.href = website;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.setAttribute('aria-label', `Coba website demo ${demo.name}`);
+          link.append(document.createTextNode('Coba website'), makeSvg('M7 17 17 7M8 7h9v9'));
+          bottom.append(label, link);
+          card.append(cardTop, description, bottom);
+          fragment.append(card);
+        });
+        privateDemoGrid.replaceChildren(fragment);
       }
 
       function formatDate(value) {
@@ -708,6 +790,7 @@
       refreshButton.addEventListener('click', () => loadRepos(true));
       retryButton.addEventListener('click', () => loadRepos(true));
 
+      renderPrivateDemos();
       loadCached();
       loadRepos();
     })();
