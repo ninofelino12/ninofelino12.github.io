@@ -1,17 +1,612 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nino Felino - Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-M3IfS8M-.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-D4wMeb7c.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="description" content="Jelajahi repositori publik GitHub Nino Felino.">
+  <meta property="og:title" content="Repositori GitHub — Nino Felino">
+  <meta property="og:description" content="Semua proyek publik, dalam satu ruang.">
+  <title>Repositori GitHub — Nino Felino</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0d12;
+      --surface: #11151d;
+      --surface-raised: #151a24;
+      --line: rgba(255,255,255,.09);
+      --line-strong: rgba(255,255,255,.15);
+      --text: #f2f4f8;
+      --muted: #929aaa;
+      --muted-2: #697284;
+      --accent: #c3f36b;
+      --accent-ink: #15210a;
+      --violet: #a78bfa;
+      --danger: #ff9a9a;
+      --radius: 18px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 85% 5%, rgba(117, 87, 205, .14), transparent 33rem),
+        radial-gradient(ellipse at 4% 28%, rgba(150, 202, 84, .07), transparent 30rem),
+        var(--bg);
+      min-height: 100vh;
+    }
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      content: "";
+      opacity: .16;
+      background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 74%);
+    }
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+    .shell { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid rgba(195,243,107,.38);
+      border-radius: 11px;
+      color: var(--accent);
+      background: rgba(195,243,107,.08);
+    }
+    .brand-mark svg { width: 18px; height: 18px; }
+    .brand-name { font-size: 13px; font-weight: 720; letter-spacing: -.02em; }
+    .brand-note { color: var(--muted); font-size: 11px; margin-top: 3px; }
+    .top-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #dce1e9;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 650;
+      transition: color .18s ease;
+    }
+    .top-link:hover { color: var(--accent); }
+    .top-link svg { width: 16px; height: 16px; }
+    main { padding: 68px 0 64px; }
+    .intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 42px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 760;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(195,243,107,.8); }
+    h1 { max-width: 720px; margin: 0; font-size: clamp(40px, 6vw, 68px); line-height: .99; letter-spacing: -.065em; font-weight: 720; }
+    h1 span { color: var(--accent); }
+    .intro-copy { max-width: 470px; margin: 20px 0 0; color: var(--muted); font-size: 14px; line-height: 1.75; }
+    .profile-card {
+      flex: 0 0 auto;
+      min-width: 206px;
+      padding: 16px 17px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(17,21,29,.74);
+      box-shadow: 0 14px 35px rgba(0,0,0,.13);
+    }
+    .profile-top { display: flex; align-items: center; gap: 11px; }
+    .avatar {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid rgba(195,243,107,.27);
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(195,243,107,.2), rgba(167,139,250,.2));
+      color: #eaf6d4;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .profile-handle { font-size: 13px; font-weight: 700; }
+    .profile-caption { margin-top: 4px; color: var(--muted); font-size: 11px; }
+    .profile-rule { height: 1px; margin: 14px 0 12px; background: var(--line); }
+    .profile-foot { display: flex; justify-content: space-between; color: var(--muted); font-size: 10px; }
+    .profile-foot strong { color: var(--text); font-weight: 650; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 32px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(110deg, rgba(21,26,36,.93), rgba(17,21,29,.82));
+      overflow: hidden;
+    }
+    .stat { display: flex; align-items: center; gap: 14px; padding: 20px 24px; }
+    .stat + .stat { border-left: 1px solid var(--line); }
+    .stat-icon { display: grid; flex: 0 0 auto; width: 38px; height: 38px; place-items: center; border: 1px solid var(--line); border-radius: 12px; color: var(--accent); background: rgba(255,255,255,.025); }
+    .stat-icon svg { width: 17px; height: 17px; }
+    .stat-value { font-size: 21px; line-height: 1; font-weight: 740; letter-spacing: -.04em; }
+    .stat-label { margin-top: 6px; color: var(--muted); font-size: 11px; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+    .section-title { margin: 0; font-size: 18px; letter-spacing: -.035em; font-weight: 690; }
+    .section-subtitle { margin: 6px 0 0; color: var(--muted); font-size: 11px; }
+    .live-note { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: 10px; white-space: nowrap; }
+    .live-note svg { width: 13px; height: 13px; color: var(--accent); }
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(200px, 1fr) 180px 190px 42px;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .search-wrap { position: relative; }
+    .search-wrap svg { position: absolute; top: 50%; left: 14px; width: 16px; height: 16px; color: var(--muted-2); transform: translateY(-50%); pointer-events: none; }
+    .search, .select, .refresh {
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--text);
+      background: rgba(17,21,29,.88);
+      transition: border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .search { width: 100%; padding: 0 14px 0 41px; outline: 0; font-size: 12px; }
+    .search::placeholder { color: var(--muted-2); }
+    .search:focus, .select:focus { border-color: rgba(195,243,107,.5); outline: 3px solid rgba(195,243,107,.08); }
+    .select { width: 100%; padding: 0 12px; outline: 0; font-size: 11px; }
+    .select option { color: var(--text); background: var(--surface); }
+    .refresh { display: grid; width: 42px; place-items: center; cursor: pointer; }
+    .refresh:hover { border-color: var(--line-strong); background: var(--surface-raised); }
+    .refresh:active { transform: scale(.96); }
+    .refresh svg { width: 16px; height: 16px; color: #dce1e9; }
+    .refresh[disabled] { cursor: wait; opacity: .6; }
+    .result-line { display: flex; align-items: center; justify-content: space-between; min-height: 22px; margin: 0 2px 12px; color: var(--muted); font-size: 10px; }
+    .result-line strong { color: #dce1e9; font-weight: 650; }
+    .repo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+    .repo-card {
+      display: flex;
+      min-height: 204px;
+      flex-direction: column;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: linear-gradient(145deg, rgba(21,26,36,.88), rgba(16,19,27,.93));
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      animation: enter .32s both;
+    }
+    .repo-card:hover { transform: translateY(-3px); border-color: rgba(195,243,107,.29); background: linear-gradient(145deg, rgba(25,32,42,.97), rgba(17,21,29,.96)); }
+    @keyframes enter { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .repo-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .repo-name-wrap { display: flex; min-width: 0; align-items: center; gap: 9px; }
+    .repo-icon { display: grid; flex: 0 0 auto; width: 28px; height: 28px; place-items: center; border: 1px solid rgba(195,243,107,.18); border-radius: 9px; color: var(--accent); background: rgba(195,243,107,.06); }
+    .repo-icon svg { width: 14px; height: 14px; }
+    .repo-name { overflow: hidden; color: #f4f6fa; font-size: 12px; font-weight: 700; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+    .repo-name:hover { color: var(--accent); }
+    .repo-status { flex: 0 0 auto; padding: 4px 7px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 9px; }
+    .repo-status.archived { border-color: rgba(255,154,154,.2); color: var(--danger); }
+    .repo-description { display: -webkit-box; min-height: 37px; margin: 14px 0 16px; overflow: hidden; color: var(--muted); font-size: 11px; line-height: 1.7; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+    .repo-description.empty { color: var(--muted-2); font-style: italic; }
+    .repo-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: auto; color: #a3abba; font-size: 10px; }
+    .meta-item { display: inline-flex; align-items: center; gap: 5px; }
+    .meta-item svg { width: 12px; height: 12px; color: var(--muted-2); }
+    .language-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dot, #8790a0); box-shadow: 0 0 8px color-mix(in srgb, var(--dot, #8790a0) 52%, transparent); }
+    .repo-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .updated { color: var(--muted-2); font-size: 9px; }
+    .repo-links { display: flex; align-items: center; gap: 12px; }
+    .repo-link { display: inline-flex; align-items: center; gap: 5px; color: #dce1e9; font-size: 10px; font-weight: 650; text-decoration: none; }
+    .repo-link:hover { color: var(--accent); }
+    .repo-link svg { width: 12px; height: 12px; }
+    .state-panel { grid-column: 1 / -1; display: grid; min-height: 220px; place-content: center; justify-items: center; padding: 30px; border: 1px dashed var(--line-strong); border-radius: 16px; text-align: center; }
+    .state-panel[hidden] { display: none; }
+    .state-icon { display: grid; width: 42px; height: 42px; place-items: center; margin-bottom: 13px; border: 1px solid var(--line); border-radius: 14px; color: var(--accent); background: rgba(195,243,107,.06); }
+    .state-icon svg { width: 18px; height: 18px; }
+    .state-title { margin: 0; font-size: 13px; font-weight: 700; }
+    .state-message { max-width: 400px; margin: 7px 0 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .state-action { margin-top: 14px; padding: 8px 12px; border: 1px solid var(--line-strong); border-radius: 9px; color: var(--text); background: var(--surface-raised); cursor: pointer; font-size: 10px; }
+    .state-action:hover { border-color: rgba(195,243,107,.4); }
+    .footnote { display: flex; align-items: center; gap: 7px; margin-top: 24px; color: var(--muted-2); font-size: 10px; }
+    .footnote svg { width: 13px; height: 13px; flex: 0 0 auto; color: var(--accent); }
+    footer { padding: 20px 0 28px; border-top: 1px solid var(--line); color: var(--muted-2); font-size: 10px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 16px; }
+    .footer-inner a { color: var(--muted); text-decoration: none; }
+    .footer-inner a:hover { color: var(--accent); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (max-width: 850px) {
+      .repo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .intro { align-items: flex-start; }
+      .profile-card { min-width: 184px; }
+      main { padding-top: 52px; }
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 28px, 520px); }
+      .topbar { height: 68px; }
+      .brand-note { display: none; }
+      .top-link span { display: none; }
+      main { padding: 43px 0 46px; }
+      .intro { display: block; margin-bottom: 30px; }
+      .eyebrow { margin-bottom: 17px; }
+      h1 { font-size: clamp(43px, 13vw, 60px); }
+      .intro-copy { margin-top: 16px; font-size: 13px; }
+      .profile-card { display: none; }
+      .stats { margin-bottom: 27px; }
+      .stat { display: block; padding: 14px 12px; text-align: center; }
+      .stat-icon { width: 31px; height: 31px; margin: 0 auto 10px; border-radius: 10px; }
+      .stat-icon svg { width: 14px; height: 14px; }
+      .stat-value { font-size: 18px; }
+      .stat-label { font-size: 9px; }
+      .section-head { align-items: flex-start; }
+      .live-note { max-width: 112px; line-height: 1.5; white-space: normal; }
+      .controls { grid-template-columns: minmax(0, 1fr) 42px; }
+      .search-wrap { grid-column: 1 / -1; }
+      .control-language { grid-column: 1; grid-row: 2; }
+      .control-sort { grid-column: 1; grid-row: 3; }
+      .refresh { grid-column: 2; grid-row: 3; }
+      .repo-grid { grid-template-columns: 1fr; gap: 10px; }
+      .repo-card { min-height: 190px; }
+      .footer-inner { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell topbar">
+    <a class="brand" href="https://github.com/ninofelino12" target="_blank" rel="noopener noreferrer" aria-label="Profil GitHub Nino Felino">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 7h10M7 12h6m-6 5h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4.5 4.5A2.5 2.5 0 0 1 7 2h10a2.5 2.5 0 0 1 2.5 2.5v15A2.5 2.5 0 0 1 17 22H7a2.5 2.5 0 0 1-2.5-2.5v-15Z" stroke="currentColor" stroke-width="1.5"/></svg></span>
+      <span><span class="brand-name">Nino Felino</span><span class="brand-note">GitHub repository index</span></span>
+    </a>
+    <a class="top-link" href="https://github.com/ninofelino12" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.53v-2.05c-3.1.67-3.75-1.32-3.75-1.32-.5-1.28-1.23-1.62-1.23-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.81 1.9 3.14 1.45.1-.71.39-1.2.7-1.48-2.48-.28-5.08-1.24-5.08-5.52 0-1.22.43-2.22 1.15-3-.12-.29-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.15a10.62 10.62 0 0 1 5.55 0c2.12-1.44 3.05-1.15 3.05-1.15.61 1.54.23 2.67.12 2.96.71.78 1.14 1.78 1.14 3 0 4.29-2.61 5.23-5.1 5.5.4.34.75 1.02.75 2.06V22c0 .29.2.64.76.53A11.1 11.1 0 0 0 12 .9Z"/></svg>
+      <span>Buka profil GitHub</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </header>
+
+  <main class="shell">
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <div class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> Koleksi proyek · GitHub</div>
+        <h1 id="page-title">Semua proyek,<br><span>satu ruang.</span></h1>
+        <p class="intro-copy">Jelajahi repositori publik yang saya kerjakan—mulai dari eksperimen kecil sampai proyek yang terus berkembang. Daftar diperbarui langsung dari GitHub.</p>
+      </div>
+      <aside class="profile-card" aria-label="Profil pemilik repositori">
+        <div class="profile-top"><div class="avatar" aria-hidden="true">NF</div><div><div class="profile-handle">@ninofelino12</div><div class="profile-caption">Software &amp; project archive</div></div></div>
+        <div class="profile-rule"></div>
+        <div class="profile-foot"><span>Status daftar</span><strong id="sync-status">Menghubungkan…</strong></div>
+      </aside>
+    </section>
+
+    <section class="stats" aria-label="Ringkasan repositori">
+      <div class="stat"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H20v15H7.5A2.5 2.5 0 0 0 5 20.5v-15Z" stroke="currentColor" stroke-width="1.6"/><path d="M5 19.5A2.5 2.5 0 0 1 7.5 17H20M9 7h7M9 10.5h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><span><span class="stat-value" id="repo-count">—</span><span class="stat-label">Repositori publik</span></span></div>
+      <div class="stat"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 2.8 5.68 6.27.91-4.54 4.42 1.07 6.24L12 17.3l-5.6 2.95 1.07-6.24L2.93 9.6l6.27-.91L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span><span><span class="stat-value" id="star-count">—</span><span class="stat-label">Bintang terkumpul</span></span></div>
+      <div class="stat"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/></svg></span><span><span class="stat-value" id="language-count">—</span><span class="stat-label">Bahasa pemrograman</span></span></div>
+    </section>
+
+    <section aria-labelledby="repos-title">
+      <div class="section-head">
+        <div><h2 class="section-title" id="repos-title">Repositori</h2><p class="section-subtitle">Temukan proyek berdasarkan nama, deskripsi, atau bahasa.</p></div>
+        <div class="live-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 8v4l2.5 1.5M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="updated-note">Data langsung dari GitHub</span></div>
+      </div>
+      <div class="controls">
+        <label class="search-wrap"><span class="sr-only">Cari repositori</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input class="search" id="search" type="search" autocomplete="off" placeholder="Cari nama atau deskripsi…"></label>
+        <label class="control-language"><span class="sr-only">Filter berdasarkan bahasa</span><select class="select" id="language-filter"><option value="all">Semua bahasa</option></select></label>
+        <label class="control-sort"><span class="sr-only">Urutkan repositori</span><select class="select" id="sort"><option value="updated">Terbaru diperbarui</option><option value="stars">Bintang terbanyak</option><option value="name">Nama A–Z</option></select></label>
+        <button class="refresh" id="refresh" type="button" aria-label="Muat ulang daftar repositori" title="Muat ulang"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.64 9A7 7 0 0 1 17.5 6.5L20 12M4 12l2.5 5.5A7 7 0 0 0 18.36 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <div class="result-line"><span id="result-count" aria-live="polite">Memuat repositori…</span><span id="cache-note"></span></div>
+      <div class="repo-grid" id="repo-grid" aria-live="polite" aria-busy="true">
+        <div class="state-panel" id="state-panel"><span class="state-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.64 5.64l2.12 2.12m8.48 8.48 2.12 2.12m0-12.72-2.12 2.12m-8.48 8.48-2.12 2.12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/></svg></span><h3 class="state-title" id="state-title">Mengambil repositori</h3><p class="state-message" id="state-message">Sebentar, sedang menyambungkan daftar proyek ke GitHub.</p><button class="state-action" id="retry" type="button" hidden>Coba lagi</button></div>
+      </div>
+      <p class="footnote"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 4 6v5c0 5.1 3.42 8.42 8 10 4.58-1.58 8-4.9 8-10V6l-8-3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Halaman ini menampilkan repositori publik saja. Repositori privat tidak dapat dilihat tanpa autentikasi.</p>
+    </section>
+  </main>
+
+  <footer><div class="shell footer-inner"><span>© <span id="year"></span> Nino Felino · Dibangun dari data GitHub publik</span><a href="https://github.com/ninofelino12" target="_blank" rel="noopener noreferrer">github.com/ninofelino12 ↗</a></div></footer>
+
+  <script>
+    (() => {
+      'use strict';
+      const USERNAME = 'ninofelino12';
+      const API_ROOT = `https://api.github.com/users/${USERNAME}/repos?type=owner&sort=updated&per_page=100`;
+      const CACHE_KEY = `repo-index:${USERNAME}:public:v1`;
+      const CACHE_TTL = 10 * 60 * 1000;
+      const PALETTE = ['#c3f36b', '#a78bfa', '#64d8cb', '#ffb86b', '#f28ba8', '#79a9ff', '#e7d574', '#8dd1a8'];
+      const grid = document.getElementById('repo-grid');
+      const panel = document.getElementById('state-panel');
+      const titleEl = document.getElementById('state-title');
+      const messageEl = document.getElementById('state-message');
+      const retryButton = document.getElementById('retry');
+      const searchInput = document.getElementById('search');
+      const sortSelect = document.getElementById('sort');
+      const languageFilter = document.getElementById('language-filter');
+      const refreshButton = document.getElementById('refresh');
+      const repoCountEl = document.getElementById('repo-count');
+      const starCountEl = document.getElementById('star-count');
+      const languageCountEl = document.getElementById('language-count');
+      const resultCountEl = document.getElementById('result-count');
+      const syncStatusEl = document.getElementById('sync-status');
+      const updatedNoteEl = document.getElementById('updated-note');
+      const cacheNoteEl = document.getElementById('cache-note');
+      const state = { repos: [], query: '', language: 'all', sort: 'updated', loading: false, cachedAt: 0 };
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+      const numberFormat = new Intl.NumberFormat('id-ID');
+      const dateFormat = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+
+      function safeExternalUrl(value) {
+        if (!value) return '';
+        try {
+          const url = new URL(value);
+          return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '';
+        } catch (_) { return ''; }
+      }
+
+      function formatDate(value) {
+        const date = new Date(value);
+        return Number.isNaN(date.getTime()) ? 'Tanggal tidak tersedia' : `Diperbarui ${dateFormat.format(date)}`;
+      }
+
+      function colorFor(language) {
+        if (!language) return '#697284';
+        let hash = 0;
+        for (const char of language) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+        return PALETTE[hash % PALETTE.length];
+      }
+
+      function setPanel(title, message, canRetry = false) {
+        panel.hidden = false;
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        retryButton.hidden = !canRetry;
+      }
+
+      function updateLanguageOptions() {
+        const current = languageFilter.value;
+        const languages = [...new Set(state.repos.map(repo => repo.language).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'id'));
+        languageFilter.replaceChildren(new Option('Semua bahasa', 'all'));
+        for (const language of languages) languageFilter.add(new Option(language, language));
+        languageFilter.value = languages.includes(current) ? current : 'all';
+        state.language = languageFilter.value;
+      }
+
+      function updateStats() {
+        const languages = new Set(state.repos.map(repo => repo.language).filter(Boolean));
+        const stars = state.repos.reduce((sum, repo) => sum + (Number(repo.stargazers_count) || 0), 0);
+        repoCountEl.textContent = numberFormat.format(state.repos.length);
+        starCountEl.textContent = numberFormat.format(stars);
+        languageCountEl.textContent = numberFormat.format(languages.size);
+      }
+
+      function makeSvg(path, viewBox = '0 0 24 24') {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', viewBox);
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('aria-hidden', 'true');
+        const shape = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        shape.setAttribute('d', path);
+        shape.setAttribute('stroke', 'currentColor');
+        shape.setAttribute('stroke-width', '1.7');
+        shape.setAttribute('stroke-linecap', 'round');
+        shape.setAttribute('stroke-linejoin', 'round');
+        svg.append(shape);
+        return svg;
+      }
+
+      function createMeta(text, iconPath, dotColor) {
+        const item = document.createElement('span');
+        item.className = 'meta-item';
+        if (dotColor) {
+          const dot = document.createElement('span');
+          dot.className = 'language-dot';
+          dot.style.setProperty('--dot', dotColor);
+          item.append(dot);
+        } else if (iconPath) item.append(makeSvg(iconPath));
+        item.append(document.createTextNode(text));
+        return item;
+      }
+
+      function createRepoCard(repo, index) {
+        const article = document.createElement('article');
+        article.className = 'repo-card';
+        article.style.animationDelay = `${Math.min(index * 28, 280)}ms`;
+
+        const cardTop = document.createElement('div');
+        cardTop.className = 'repo-card-top';
+        const nameWrap = document.createElement('div');
+        nameWrap.className = 'repo-name-wrap';
+        const repoIcon = document.createElement('span');
+        repoIcon.className = 'repo-icon';
+        repoIcon.append(makeSvg('M6 3.75h8.2L18 7.6v12.65H6V3.75Z M14 3.75V8h4 M8.5 12h7 M8.5 15.5h7'));
+        const repoLink = document.createElement('a');
+        repoLink.className = 'repo-name';
+        repoLink.href = `https://github.com/${encodeURIComponent(USERNAME)}/${encodeURIComponent(repo.name)}`;
+        repoLink.target = '_blank';
+        repoLink.rel = 'noopener noreferrer';
+        repoLink.title = repo.name;
+        repoLink.textContent = repo.name;
+        nameWrap.append(repoIcon, repoLink);
+        cardTop.append(nameWrap);
+        if (repo.archived) {
+          const badge = document.createElement('span');
+          badge.className = 'repo-status archived';
+          badge.textContent = 'Arsip';
+          cardTop.append(badge);
+        } else if (repo.fork) {
+          const badge = document.createElement('span');
+          badge.className = 'repo-status';
+          badge.textContent = 'Fork';
+          cardTop.append(badge);
+        }
+
+        const description = document.createElement('p');
+        description.className = `repo-description${repo.description ? '' : ' empty'}`;
+        description.textContent = repo.description || 'Belum ada deskripsi untuk repositori ini.';
+
+        const meta = document.createElement('div');
+        meta.className = 'repo-meta';
+        if (repo.language) meta.append(createMeta(repo.language, '', colorFor(repo.language)));
+        meta.append(createMeta(numberFormat.format(Number(repo.stargazers_count) || 0), 'M12 3 14.8 8.68l6.27.91-4.54 4.42 1.07 6.24L12 17.3l-5.6 2.95 1.07-6.24L2.93 9.6l6.27-.91L12 3Z'));
+        if (Number(repo.forks_count) > 0) meta.append(createMeta(numberFormat.format(Number(repo.forks_count)), 'M7 7v10m0-10a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0-4V9a2 2 0 0 0-2-2h-2m2 0 2-2m-2 2 2 2'));
+
+        const bottom = document.createElement('div');
+        bottom.className = 'repo-bottom';
+        const updated = document.createElement('span');
+        updated.className = 'updated';
+        updated.textContent = formatDate(repo.updated_at);
+        const links = document.createElement('span');
+        links.className = 'repo-links';
+        const homepage = safeExternalUrl(repo.homepage);
+        if (homepage) {
+          const demo = document.createElement('a');
+          demo.className = 'repo-link';
+          demo.href = homepage;
+          demo.target = '_blank';
+          demo.rel = 'noopener noreferrer';
+          demo.textContent = 'Demo';
+          demo.append(makeSvg('M7 17 17 7M8 7h9v9'));
+          links.append(demo);
+        }
+        const view = document.createElement('a');
+        view.className = 'repo-link';
+        view.href = repoLink.href;
+        view.target = '_blank';
+        view.rel = 'noopener noreferrer';
+        view.textContent = 'Lihat repo';
+        view.append(makeSvg('M7 17 17 7M8 7h9v9'));
+        links.append(view);
+        bottom.append(updated, links);
+        article.append(cardTop, description, meta, bottom);
+        return article;
+      }
+
+      function render() {
+        const query = state.query.trim().toLocaleLowerCase('id');
+        let filtered = state.repos.filter(repo => {
+          const matchesLanguage = state.language === 'all' || repo.language === state.language;
+          const haystack = `${repo.name} ${repo.description || ''} ${repo.language || ''}`.toLocaleLowerCase('id');
+          return matchesLanguage && (!query || haystack.includes(query));
+        });
+        if (state.sort === 'stars') filtered.sort((a, b) => (Number(b.stargazers_count) || 0) - (Number(a.stargazers_count) || 0));
+        else if (state.sort === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name, 'id', { sensitivity: 'base' }));
+        else filtered.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+        grid.querySelectorAll('.repo-card').forEach(card => card.remove());
+        if (state.loading && state.repos.length === 0) {
+          resultCountEl.textContent = 'Memuat repositori…';
+          return;
+        }
+        panel.hidden = filtered.length > 0;
+        if (filtered.length === 0) {
+          const hasRepos = state.repos.length > 0;
+          setPanel(hasRepos ? 'Tidak ada hasil' : 'Repositori belum tersedia', hasRepos ? 'Coba kata kunci lain atau pilih filter bahasa yang berbeda.' : 'Daftar repositori belum dapat dimuat. Pastikan koneksi internet tersedia lalu coba lagi.', !hasRepos);
+        }
+        resultCountEl.textContent = `${numberFormat.format(filtered.length)} dari ${numberFormat.format(state.repos.length)} repositori`;
+        const fragment = document.createDocumentFragment();
+        filtered.forEach((repo, index) => fragment.append(createRepoCard(repo, index)));
+        grid.append(fragment);
+      }
+
+      function loadCached() {
+        try {
+          const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+          if (!cached || !Array.isArray(cached.repos)) return false;
+          state.repos = cached.repos.filter(repo => repo && repo.private === false && repo.owner && repo.owner.login.toLowerCase() === USERNAME.toLowerCase());
+          state.cachedAt = Number(cached.savedAt) || 0;
+          if (!state.repos.length) return false;
+          updateStats();
+          updateLanguageOptions();
+          render();
+          syncStatusEl.textContent = 'Cache tersimpan';
+          cacheNoteEl.textContent = 'Data tersimpan sementara';
+          return true;
+        } catch (_) { return false; }
+      }
+
+      async function fetchAllPublicRepos() {
+        const repos = [];
+        let url = API_ROOT;
+        let pages = 0;
+        while (url && pages < 10) {
+          const response = await fetch(url, { headers: { Accept: 'application/vnd.github+json' }, cache: 'no-store' });
+          if (!response.ok) {
+            if (response.status === 403 || response.status === 429) throw new Error('GitHub membatasi permintaan untuk sementara. Tunggu sebentar lalu muat ulang halaman.');
+            if (response.status === 404) throw new Error('Akun GitHub tidak ditemukan.');
+            throw new Error(`GitHub mengembalikan respons ${response.status}. Coba muat ulang sebentar lagi.`);
+          }
+          const pageRepos = await response.json();
+          if (!Array.isArray(pageRepos)) throw new Error('Format daftar repositori dari GitHub tidak sesuai.');
+          repos.push(...pageRepos.filter(repo => repo && repo.private === false && repo.owner && repo.owner.login.toLowerCase() === USERNAME.toLowerCase()));
+          const link = response.headers.get('Link') || '';
+          const next = link.split(',').find(part => /rel="next"/.test(part));
+          url = next ? next.match(/<([^>]+)>/)?.[1] || '' : '';
+          pages += 1;
+        }
+        return repos;
+      }
+
+      async function loadRepos(force = false) {
+        if (state.loading) return;
+        state.loading = true;
+        refreshButton.disabled = true;
+        refreshButton.setAttribute('aria-busy', 'true');
+        grid.setAttribute('aria-busy', 'true');
+        retryButton.hidden = true;
+        if (state.repos.length === 0) setPanel('Mengambil repositori', 'Sebentar, sedang menyambungkan daftar proyek ke GitHub.');
+        syncStatusEl.textContent = state.repos.length ? 'Memperbarui…' : 'Menghubungkan…';
+        try {
+          const freshRepos = await fetchAllPublicRepos();
+          state.repos = freshRepos;
+          state.cachedAt = Date.now();
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ savedAt: state.cachedAt, repos: freshRepos }));
+          updateStats();
+          updateLanguageOptions();
+          updatedNoteEl.textContent = 'Data langsung dari GitHub';
+          cacheNoteEl.textContent = '';
+          syncStatusEl.textContent = 'Tersinkron';
+          render();
+        } catch (error) {
+          if (state.repos.length) {
+            syncStatusEl.textContent = 'Menampilkan cache';
+            cacheNoteEl.textContent = 'Tidak dapat memperbarui sekarang';
+            updatedNoteEl.textContent = state.cachedAt ? `Cache ${formatDate(new Date(state.cachedAt).toISOString()).replace('Diperbarui ', '')}` : 'Data tersimpan sementara';
+            render();
+          } else {
+            syncStatusEl.textContent = 'Tidak tersambung';
+            resultCountEl.textContent = 'Daftar repositori tidak tersedia';
+            setPanel('Tidak dapat memuat repositori', error.message || 'Periksa koneksi internet Anda lalu coba lagi.', true);
+          }
+        } finally {
+          state.loading = false;
+          refreshButton.disabled = false;
+          refreshButton.removeAttribute('aria-busy');
+          grid.setAttribute('aria-busy', 'false');
+        }
+      }
+
+      searchInput.addEventListener('input', event => { state.query = event.target.value; render(); });
+      sortSelect.addEventListener('change', event => { state.sort = event.target.value; render(); });
+      languageFilter.addEventListener('change', event => { state.language = event.target.value; render(); });
+      refreshButton.addEventListener('click', () => loadRepos(true));
+      retryButton.addEventListener('click', () => loadRepos(true));
+
+      loadCached();
+      loadRepos();
+    })();
+  </script>
+</body>
 </html>
