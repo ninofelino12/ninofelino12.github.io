@@ -240,27 +240,54 @@
       .eyebrow { margin-bottom: 17px; }
       h1 { font-size: clamp(43px, 13vw, 60px); }
       .intro-copy { margin-top: 16px; font-size: 13px; }
-      .profile-card { display: none; }
+      .profile-card { display: flex; align-items: center; gap: 12px; width: 100%; min-width: 0; margin-top: 22px; padding: 12px; }
+      .profile-top { flex: 1; min-width: 0; gap: 10px; }
+      .avatar { width: 52px; height: 52px; border-radius: 14px; }
+      .profile-handle { font-size: 12px; }
+      .profile-caption { font-size: 10px; line-height: 1.4; }
+      .profile-rule { flex: 0 0 auto; width: 1px; height: 38px; margin: 0; }
+      .profile-foot { min-width: 90px; flex-direction: column; align-items: flex-end; gap: 4px; }
+      .profile-foot span, .profile-foot strong { font-size: 9px; text-align: right; }
+      .profile-foot strong { max-width: 120px; line-height: 1.35; overflow-wrap: anywhere; }
       .stats { margin-bottom: 27px; }
       .stat { display: block; padding: 14px 12px; text-align: center; }
       .stat-icon { width: 31px; height: 31px; margin: 0 auto 10px; border-radius: 10px; }
       .stat-icon svg { width: 14px; height: 14px; }
-      .stat-value { font-size: 18px; }
-      .stat-label { font-size: 9px; }
-      .section-head { align-items: flex-start; }
-      .live-note { max-width: 112px; line-height: 1.5; white-space: normal; }
+      .stat-value { display: block; font-size: 18px; }
+      .stat-label { display: block; margin-top: 6px; font-size: 9px; line-height: 1.35; }
+      .section-head { display: block; margin-bottom: 16px; }
+      .live-note { display: flex; max-width: none; margin-top: 11px; line-height: 1.5; white-space: normal; }
       .controls { grid-template-columns: minmax(0, 1fr) 42px; }
       .search-wrap { grid-column: 1 / -1; }
-      .control-language { grid-column: 1; grid-row: 2; }
+      .control-language { grid-column: 1 / -1; grid-row: 2; }
       .control-sort { grid-column: 1; grid-row: 3; }
       .refresh { grid-column: 2; grid-row: 3; }
       .repo-grid { grid-template-columns: 1fr; gap: 10px; }
-      .repo-card { min-height: 190px; }
-      .footer-inner { flex-direction: column; }
+      .repo-card { min-height: 176px; padding: 16px; }
+      .repo-bottom { gap: 8px; margin-top: 12px; }
+      .repo-links { gap: 7px; }
+      .repo-link { min-height: 32px; padding: 0 4px; }
+      .footnote { align-items: flex-start; margin-top: 20px; font-size: 9px; line-height: 1.65; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+    @media (max-width: 360px) {
+      .shell { width: min(100% - 24px, 520px); }
+      .profile-card { flex-wrap: wrap; gap: 10px; }
+      .profile-top { flex: 1 1 100%; }
+      .profile-top > div { min-width: 0; }
+      .profile-handle { overflow-wrap: anywhere; }
+      .profile-rule { display: none; }
+      .profile-foot { width: 100%; min-width: 0; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+      .profile-foot span { text-align: left; }
+      .profile-foot strong { max-width: 60%; }
+      .stat { padding: 13px 6px; }
+      .stat-label { font-size: 8px; }
+      .repo-card { padding: 15px; }
+      .controls { gap: 8px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-    }
+      }
   </style>
 </head>
 <body>
