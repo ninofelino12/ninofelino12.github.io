@@ -127,6 +127,27 @@
     .profile-rule { height: 1px; margin: 14px 0 12px; background: var(--line); }
     .profile-foot { display: flex; justify-content: space-between; color: var(--muted); font-size: 10px; }
     .profile-foot strong { color: var(--text); font-weight: 650; }
+    .favorite-section { margin-bottom: 32px; }
+    .favorite-grid { display: flex; flex-wrap: wrap; gap: 9px; }
+    .favorite-button {
+      display: inline-flex;
+      min-height: 40px;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--text);
+      background: rgba(17,21,29,.78);
+      font-size: 11px;
+      font-weight: 650;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .favorite-button:hover { transform: translateY(-1px); border-color: rgba(195,243,107,.4); background: var(--surface-raised); }
+    .favorite-button:focus-visible { outline: 3px solid rgba(195,243,107,.18); outline-offset: 2px; }
+    .favorite-button svg { width: 14px; height: 14px; color: var(--accent); }
+    .favorite-status { margin: 9px 0 0; color: var(--muted-2); font-size: 10px; }
     .stats {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -345,6 +366,14 @@
       </aside>
     </section>
 
+    <section class="favorite-section" aria-labelledby="favorites-title">
+      <div class="section-head">
+        <div><h2 class="section-title" id="favorites-title">Favorit</h2><p class="section-subtitle">Tautan pilihan dari daftar favorit.</p></div>
+      </div>
+      <nav class="favorite-grid" id="favorite-grid" aria-label="Tautan favorit"></nav>
+      <p class="favorite-status" id="favorite-status" aria-live="polite">Memuat favorit…</p>
+    </section>
+
     <section class="stats" aria-label="Ringkasan repositori">
       <div class="stat"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H20v15H7.5A2.5 2.5 0 0 0 5 20.5v-15Z" stroke="currentColor" stroke-width="1.6"/><path d="M5 19.5A2.5 2.5 0 0 1 7.5 17H20M9 7h7M9 10.5h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><span><span class="stat-value" id="repo-count">—</span><span class="stat-label">Repo publik di kandang</span></span></div>
       <div class="stat"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 2.8 5.68 6.27.91-4.54 4.42 1.07 6.24L12 17.3l-5.6 2.95 1.07-6.24L2.93 9.6l6.27-.91L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span><span><span class="stat-value" id="star-count">—</span><span class="stat-label">Bintang nyangkut</span></span></div>
@@ -421,6 +450,8 @@
       const CACHE_TTL = 10 * 60 * 1000;
       const PALETTE = ['#c3f36b', '#a78bfa', '#64d8cb', '#ffb86b', '#f28ba8', '#79a9ff', '#e7d574', '#8dd1a8'];
       const grid = document.getElementById('repo-grid');
+      const favoriteGrid = document.getElementById('favorite-grid');
+      const favoriteStatusEl = document.getElementById('favorite-status');
       const privateDemoGrid = document.getElementById('private-demo-grid');
       const panel = document.getElementById('state-panel');
       const titleEl = document.getElementById('state-title');
@@ -449,6 +480,40 @@
           const url = new URL(value);
           return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '';
         } catch (_) { return ''; }
+      }
+
+      async function loadFavorites() {
+        try {
+          const response = await fetch('./favorit.json');
+          if (!response.ok) throw new Error(`favorit.json gagal dimuat (${response.status})`);
+          const favorites = await response.json();
+          if (!Array.isArray(favorites)) throw new Error('Format favorit.json harus berupa daftar');
+
+          const fragment = document.createDocumentFragment();
+          favorites.forEach((favorite, index) => {
+            if (!favorite || typeof favorite.nama !== 'string' || typeof favorite.url !== 'string') {
+              throw new Error(`Data favorit ke-${index + 1} tidak valid`);
+            }
+            const name = favorite.nama.trim();
+            const url = safeExternalUrl(favorite.url);
+            if (!name || !url) throw new Error(`Nama atau URL favorit ke-${index + 1} tidak valid`);
+
+            const link = document.createElement('a');
+            link.className = 'favorite-button';
+            link.href = url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.append(makeSvg('M7 17 17 7M8 7h9v9'), document.createTextNode(name));
+            fragment.append(link);
+          });
+
+          favoriteGrid.replaceChildren(fragment);
+          favoriteStatusEl.textContent = favorites.length
+            ? `${favorites.length} tautan favorit dimuat dari favorit.json`
+            : 'Belum ada tautan favorit.';
+        } catch (error) {
+          favoriteStatusEl.textContent = `Favorit tidak bisa dimuat: ${error.message}`;
+        }
       }
 
       function renderPrivateDemos() {
@@ -791,6 +856,7 @@
       retryButton.addEventListener('click', () => loadRepos(true));
 
       renderPrivateDemos();
+      loadFavorites();
       loadCached();
       loadRepos();
     })();
