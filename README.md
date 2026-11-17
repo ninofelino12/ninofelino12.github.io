@@ -1,2 +1,16 @@
 # ninofelino12.github.io
-websites
+
+Kumpulan website pribadi dan demo proyek.
+
+## Tautan favorit
+
+Daftar tautan yang ditampilkan sebagai tombol di halaman utama dikelola di `favorit.json`. Tambahkan item dengan properti `nama` dan `url`, misalnya:
+
+```json
+[
+  {
+    "nama": "GitHub",
+    "url": "https://github.com"
+  }
+]
+```
