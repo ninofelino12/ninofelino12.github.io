@@ -1,7 +1,7 @@
 [
   {
-    "nama": "GitHub",
-    "url": "https://github.com"
+    "nama": "8266-oled",
+    "url": "192.168.101.22"
   },
   {
     "nama": "ESP32 DEV OLED",
