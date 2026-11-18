@@ -1,11 +1,12 @@
 'use strict';
 
-const CACHE_NAME = 'markas-repo-v1';
+const CACHE_NAME = 'markas-repo-v2';
 const APP_ROOT = self.registration.scope;
 const APP_SHELL = [
   APP_ROOT,
   new URL('index.html', APP_ROOT).href,
   new URL('favorit.json', APP_ROOT).href,
+  new URL('social.json', APP_ROOT).href,
   new URL('manifest.webmanifest', APP_ROOT).href,
   new URL('icons/icon-192.png', APP_ROOT).href,
   new URL('icons/icon-512.png', APP_ROOT).href
@@ -39,8 +40,11 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  const isFavorites = url.href === new URL('favorit.json', APP_ROOT).href;
-  if (request.mode === 'navigate' || isFavorites) {
+  const isJsonData = [
+    new URL('favorit.json', APP_ROOT).href,
+    new URL('social.json', APP_ROOT).href
+  ].includes(url.href);
+  if (request.mode === 'navigate' || isJsonData) {
     event.respondWith(
       fetch(request).then(async response => {
           if (response.ok) {

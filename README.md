@@ -14,3 +14,7 @@ Daftar tautan yang ditampilkan sebagai tombol di halaman utama dikelola di `favo
   }
 ]
 ```
+
+## Media sosial
+
+Tautan media sosial di footer dikelola di `social.json`. Setiap item menggunakan properti `nama`, `username`, dan `url`.
