@@ -495,12 +495,11 @@
               throw new Error(`Data favorit ke-${index + 1} tidak valid`);
             }
             const name = favorite.nama.trim();
-            const url = safeExternalUrl(favorite.url);
-            if (!name || !url) throw new Error(`Nama atau URL favorit ke-${index + 1} tidak valid`);
+            if (!name) throw new Error(`Nama favorit ke-${index + 1} tidak valid`);
 
             const link = document.createElement('a');
             link.className = 'favorite-button';
-            link.href = url;
+            link.href = favorite.url;
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
             link.append(makeSvg('M7 17 17 7M8 7h9v9'), document.createTextNode(name));
